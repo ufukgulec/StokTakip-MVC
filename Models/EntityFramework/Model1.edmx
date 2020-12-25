@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DbDukkanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="kategori">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="kullanici">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KullaniciAd" Type="nvarchar" MaxLength="50" />
+          <Property Name="Parola" Type="nvarchar" MaxLength="50" />
+          <Property Name="YetkiId" Type="int" />
+        </EntityType>
+        <EntityType Name="urun">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adet" Type="int" />
+          <Property Name="Fiyat" Type="money" />
+          <Property Name="KategoriId" Type="int" />
+          <Property Name="SatistaMi" Type="bit" />
+        </EntityType>
+        <EntityType Name="yetki">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_kullanici_yetki">
+          <End Role="yetki" Type="Self.yetki" Multiplicity="0..1" />
+          <End Role="kullanici" Type="Self.kullanici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="yetki">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="kullanici">
+              <PropertyRef Name="YetkiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_urun_kategori">
+          <End Role="kategori" Type="Self.kategori" Multiplicity="0..1" />
+          <End Role="urun" Type="Self.urun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kategori">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="urun">
+              <PropertyRef Name="KategoriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbDukkanModelStoreContainer">
+          <EntitySet Name="kategori" EntityType="Self.kategori" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="kullanici" EntityType="Self.kullanici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="urun" EntityType="Self.urun" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="yetki" EntityType="Self.yetki" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_kullanici_yetki" Association="Self.FK_kullanici_yetki">
+            <End Role="yetki" EntitySet="yetki" />
+            <End Role="kullanici" EntitySet="kullanici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_urun_kategori" Association="Self.FK_urun_kategori">
+            <End Role="kategori" EntitySet="kategori" />
+            <End Role="urun" EntitySet="urun" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DbDukkanModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="kategori">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="urun" Relationship="DbDukkanModel.FK_urun_kategori" FromRole="kategori" ToRole="urun" />
+        </EntityType>
+        <EntityType Name="urun">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adet" Type="Int32" />
+          <Property Name="KategoriId" Type="Int32" />
+          <NavigationProperty Name="kategori" Relationship="DbDukkanModel.FK_urun_kategori" FromRole="urun" ToRole="kategori" />
+          <Property Name="Fiyat" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SatistaMi" Type="Boolean" />
+        </EntityType>
+        <EntityContainer Name="DbDukkanEntities" annotation:LazyLoadingEnabled="false">
+          <EntitySet Name="kategori" EntityType="Self.kategori" />
+          <EntitySet Name="urun" EntityType="Self.urun" />
+          <AssociationSet Name="FK_urun_kategori" Association="DbDukkanModel.FK_urun_kategori">
+            <End Role="kategori" EntitySet="kategori" />
+            <End Role="urun" EntitySet="urun" />
+          </AssociationSet>
+          <EntitySet Name="kullanici" EntityType="DbDukkanModel.kullanici" />
+          <EntitySet Name="yetki" EntityType="DbDukkanModel.yetki" />
+          <AssociationSet Name="FK_kullanici_yetki" Association="DbDukkanModel.FK_kullanici_yetki">
+            <End Role="yetki" EntitySet="yetki" />
+            <End Role="kullanici" EntitySet="kullanici" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_urun_kategori">
+          <End Type="DbDukkanModel.kategori" Role="kategori" Multiplicity="0..1" />
+          <End Type="DbDukkanModel.urun" Role="urun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kategori">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="urun">
+              <PropertyRef Name="KategoriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="kullanici">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KullaniciAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Parola" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="YetkiId" Type="Int32" />
+          <NavigationProperty Name="yetki" Relationship="DbDukkanModel.FK_kullanici_yetki" FromRole="kullanici" ToRole="yetki" />
+        </EntityType>
+        <EntityType Name="yetki">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="kullanici" Relationship="DbDukkanModel.FK_kullanici_yetki" FromRole="yetki" ToRole="kullanici" />
+        </EntityType>
+        <Association Name="FK_kullanici_yetki">
+          <End Type="DbDukkanModel.yetki" Role="yetki" Multiplicity="0..1" />
+          <End Type="DbDukkanModel.kullanici" Role="kullanici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="yetki">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="kullanici">
+              <PropertyRef Name="YetkiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DbDukkanModelStoreContainer" CdmEntityContainer="DbDukkanEntities">
+          <EntitySetMapping Name="kategori">
+            <EntityTypeMapping TypeName="DbDukkanModel.kategori">
+              <MappingFragment StoreEntitySet="kategori">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="urun">
+            <EntityTypeMapping TypeName="DbDukkanModel.urun">
+              <MappingFragment StoreEntitySet="urun">
+                <ScalarProperty Name="SatistaMi" ColumnName="SatistaMi" />
+                <ScalarProperty Name="Fiyat" ColumnName="Fiyat" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Adet" ColumnName="Adet" />
+                <ScalarProperty Name="KategoriId" ColumnName="KategoriId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="kullanici">
+            <EntityTypeMapping TypeName="DbDukkanModel.kullanici">
+              <MappingFragment StoreEntitySet="kullanici">
+                <ScalarProperty Name="YetkiId" ColumnName="YetkiId" />
+                <ScalarProperty Name="Parola" ColumnName="Parola" />
+                <ScalarProperty Name="KullaniciAd" ColumnName="KullaniciAd" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="yetki">
+            <EntityTypeMapping TypeName="DbDukkanModel.yetki">
+              <MappingFragment StoreEntitySet="yetki">
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
