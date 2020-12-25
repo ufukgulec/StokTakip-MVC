@@ -1,0 +1,40 @@
+﻿@using MvcStok.Models.EntityFramework
+@model List<urun>
+@{
+    ViewBag.Title = "Sil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-12">
+    <h2>@Model[0].kategori.Ad'de Ürün Bulundu...</h2>
+    <hr />
+    <a href="/Kategori/DoluKategoriSil/@Model[0].kategori.Id" class="btn col-12 btn-danger">Kategorideki Tüm Ürünler Silinir...</a>
+</div>
+
+<div class="col-12">
+    <hr />
+
+    <div class="row col-md-12 table-responsive col-md-offset-2 custyle">
+        <table class="table table-striped custab">
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>AD</th>
+                    <th>ADET</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Ad</td>
+                    <td>@item.Adet</td>
+                </tr>
+            }
+        </table>
+        <div class="alert alert-danger col-12 text-center" role="alert">
+            Ürün sayısı:
+            @Model.Count
+        </div>
+    </div>
+</div>

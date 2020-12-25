@@ -1,0 +1,40 @@
+﻿@using MvcStok.Models.EntityFramework
+@model List<urun>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container" >
+    <div class="row table-responsive col-md-12 col-md-offset-2 custyle">
+        <table class="table table-striped custab ml-auto mr-auto">
+            <thead>
+
+                <tr>
+                    <th></th>
+                    <th>AD</th>
+                    <th>FİYAT</th>
+                    <th>ADET</th>
+                    <th>KATEGORİ</th>
+
+                </tr>
+            </thead>
+            @{int i = 1; }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i.</td>
+                    <td>@item.Ad</td>
+                    <td>@item.Fiyat </td>
+                    <td>@item.Adet</td>
+                    <td>@item.kategori.Ad</td>
+
+                </tr>
+                i++;
+            }
+        </table>
+        <div class="alert alert-danger col-md-12 text-center" role="alert">
+            Satışta Olan Ürün sayısı:
+            @Model.Count
+        </div>
+    </div>
+</div>

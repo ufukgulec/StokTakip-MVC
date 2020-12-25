@@ -1,0 +1,57 @@
+﻿@using MvcStok.Models.EntityFramework
+@model List<kullanici>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>KULLANICILAR</h2>
+<div class="container">
+    <div class="row table-responsive col-md-12 col-md-offset-2 custyle">
+        <table class="table table-bordered dataTable">
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>AD</th>
+                    <th>YETKİ</th>
+                    @if (User.IsInRole("süperadmin"))
+                    {
+                        <th>PAROLA</th>
+                        <th>YETKİ VER</th>
+                        <th>SİL</th>
+                    }
+
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.KullaniciAd</td>
+                    <td>@item.yetki.Ad</td>
+                    @if (User.IsInRole("süperadmin"))
+                    {
+                        <td>@item.Parola</td>
+                        if (item.YetkiId == 2)
+                        {
+                            <td><a href="/Kullanici/Yetki/@item.Id" class="btn btn-block btn-danger">YETKİ AL</a></td>
+                        }
+                        else
+                        {
+                            <td><a href="/Kullanici/Yetki/@item.Id" class="btn btn-block btn-success">YETKİ VER</a></td>
+                        }
+
+                        <td><a href="/Kullanici/Sil/@item.Id" class="btn btn-block btn-warning">Sil</a></td>
+                    }
+
+                </tr>
+            }
+        </table>
+        <div class="alert alert-danger col-12 text-center" role="alert">
+            Kullanıcı sayısı:
+            @Model.Count
+        </div>
+    </div>
+
+</div>

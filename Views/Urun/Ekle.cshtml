@@ -1,0 +1,48 @@
+﻿@model MvcStok.Models.EntityFramework.urun
+@using MvcStok.Models.EntityFramework
+@{
+    ViewBag.Title = "Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-12">
+    <h2>Ürün İşlemleri</h2>
+</div>
+
+
+<div class="col-12">
+
+    @using (Html.BeginForm("Ekle", "Urun", FormMethod.Post))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.Ad)
+            @Html.TextBoxFor(m => m.Ad, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Fiyat)
+            @Html.TextBoxFor(m => m.Fiyat, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.kategori.Id)
+            @Html.DropDownListFor(m => m.KategoriId, new SelectList(ViewBag.kategori, "Id", "Ad"), "Kategori Seçiniz", new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Adet)
+            @Html.TextBoxFor(m => m.Adet, new { @class = "form-control" })
+        </div>
+        <div class="radio">
+            <p>Satışta Mı ?</p>
+
+            <label>
+                @Html.RadioButtonFor(m => m.SatistaMi, true) Evet
+            </label>
+            <label>
+                @Html.RadioButtonFor(m => m.SatistaMi, false) Hayır
+            </label>
+        </div>
+        <hr />
+        @Html.HiddenFor(m => m.Id)
+        <button type="submit" class="btn col-12 btn-success">KAYDET</button>
+        <hr />
+        <a href="/Urun/Index" class="btn btn-danger col-12">GERİ</a>
+    }
+</div>
