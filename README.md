@@ -8,5 +8,6 @@ Süperadminin yapabildikleri:Adminden farklı olarak kullanıcıların ve adminl
 <h2>Admin Paneli</h2>
 <img class="my-4" src="https://i.hizliresim.com/mLz60T.png" alt="mLz60T">
 <img class="my-4" src="https://i.hizliresim.com/iZM03x.png" alt="iZM03x">
-<img class="my-4" src="https://i.hizliresim.com/I70DnY.png" alt="I70DnY">
-
+<img class="my-4" src="https://i.hizliresim.com/eSu7u9.png" alt="eSu7u9">
+<h2>Login</h2>
+<img class="my-4" src="https://i.hizliresim.com/MBEoKw.png" alt="MBEoKw">
